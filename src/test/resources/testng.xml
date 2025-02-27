@@ -1,0 +1,8 @@
+<suite thread-count="2" parallel="classes" name="Parallel testing">
+  <test name="Test parallel">
+    <classes>
+      <class name="apitest.PositiveTest"/>
+      <class name="apitest.NegativeTest"/>
+    </classes>
+  </test> <!-- Test parallel -->
+</suite> <!-- Parallel testing -->

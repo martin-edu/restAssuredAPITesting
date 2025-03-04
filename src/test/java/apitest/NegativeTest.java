@@ -1,9 +1,9 @@
 package apitest;
 
+import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import domain.Post;
 import io.restassured.response.Response;
 
 public class NegativeTest extends TestBase {
@@ -14,10 +14,8 @@ public class NegativeTest extends TestBase {
 	@Test
     public void getPostByIdWithNonExistedId()
     {
-		System.out.println("Test negative thread number "+Thread.currentThread().getId());
-    	Response response = postApiClient.getPostById(1000);
-    	
-    	Assert.assertEquals(response.getStatusCode(), 404);
+    	Response response = postApiClient.getPostById(1000);   	
+    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     	Assert.assertNotNull(response, "{}");
     }
 	
@@ -28,8 +26,7 @@ public class NegativeTest extends TestBase {
 	void getPostByIdWithWrongParameter()
 	{
 		Response response = postApiClient.getPostById("a");
-		
-		Assert.assertEquals(response.getStatusCode(), 404);
+		Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     	Assert.assertNotNull(response, "{}");
 	}
 	
@@ -40,8 +37,7 @@ public class NegativeTest extends TestBase {
 	void getCommentsByIdWithWrongParameter()
 	{
 		Response response = commentApiClient.getCommentsByPostId("a");
-    	
-    	Assert.assertEquals(response.getStatusCode(), 200);
+    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     	Assert.assertNotNull(response, "[]");
 	}
 	
@@ -51,13 +47,9 @@ public class NegativeTest extends TestBase {
 	@Test
 	void getCommentsByIdWithWrongParameterInUrl()
 	{
-		//Post[] posts = get(url+"/posts/1/comments").as(Post[].class);
 		Response response = commentApiClient.getCommentsByPostIdWithUrlParameter("a");
-    	
-    	Assert.assertEquals(response.getStatusCode(), 200);
+    	Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     	Assert.assertNotNull(response, "{}");
 	}
-	
-	
-
 }
+
